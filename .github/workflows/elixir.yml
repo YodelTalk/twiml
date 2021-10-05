@@ -15,15 +15,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        elixir: [1.10, 1.11, 1.12]
+        elixir: [1.11, 1.12]
         otp: [21.x, 22.x, 23.x, 24.x]
-        exclude:
-          - elixir: 1.12
-            otp: 21.x
-          - elixir: 1.10
-            otp: 23.x
-          - elixir: 1.10
-            otp: 24.x
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1

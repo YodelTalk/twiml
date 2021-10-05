@@ -9,7 +9,7 @@ defmodule Twiml.MixProject do
     [
       app: :twiml,
       version: @version,
-      elixir: "~> 1.12",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),

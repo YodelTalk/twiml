@@ -35,8 +35,8 @@ defmodule TwiML.Magic do
           :all ->
             [build_verb(unquote(verb), attrs, [verbs])]
 
-          count when is_integer(count) ->
-            {head, tail} = Enum.split(verbs, count)
+          count when is_integer(count) and count > 0 ->
+            {head, tail} = Enum.split(verbs, count * -1)
             head ++ [build_verb(unquote(verb), attrs, [tail])]
         end
       end

@@ -84,6 +84,27 @@ iex> TwiML.say("Calling Yodel")
 </Response>)
 ```
 
+```elixir
+iex> TwiML.say("Calling Yodel")
+...> |> TwiML.identity("deadmau5")
+...> |> TwiML.parameter([], name: "first_name", value: "Joel")
+...> |> TwiML.parameter([], name: "last_name", value: "Zimmermann")
+...> |> TwiML.into_client([], 3)
+...> |> TwiML.into_dial([], 1)
+...> |> TwiML.to_xml()
+~s(<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say>Calling Yodel</Say>
+  <Dial>
+    <Client>
+      <Identity>deadmau5</Identity>
+      <Parameter name="first_name" value="Joel"/>
+      <Parameter name="last_name" value="Zimmermann"/>
+    </Client>
+  </Dial>
+</Response>)
+```
+
 Reject a call:
 
 ```elixir

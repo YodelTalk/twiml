@@ -7,10 +7,13 @@ defmodule TwiML do
 
   use TwiML.Magic,
     verbs: [
+      :client,
       :dial,
       :gather,
       :hangup,
+      :identity,
       :number,
+      :parameter,
       :pause,
       :play,
       :redirect,

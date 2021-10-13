@@ -96,26 +96,25 @@ iex> TwiML.say("Calling Yodel")
 </Response>)
 ```
 
-The `into_*` functions can take attributes, the number of preceding tags or both
-as arguments (this example below is not really a valid TwiML response, hence the
-nested `<Dial>` verbs):
+The `into_*` functions can take the number of preceding tags, attributes or both
+as arguments:
 
 ```elixir
-iex> TwiML.number("+1 415-483-0400")
-...> |> TwiML.into_dial(1)
-...> |> TwiML.number("+1 415-483-0400")
-...> |> TwiML.into_dial(1, caller: "+1 800-555-2368")
-...> |> TwiML.into_dial(caller: "+1 800-555-2368")
+iex> TwiML.identity("venkman")
+...> |> TwiML.into_client(1)
+...> |> TwiML.identity("stantz")
+...> |> TwiML.into_client(1, method: "GET")
+...> |> TwiML.into_dial(caller: "+1 415-483-0400")
 ...> |> TwiML.to_xml()
 ~s(<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Dial caller="+1 800-555-2368">
-    <Dial>
-      <Number>+1 415-483-0400</Number>
-    </Dial>
-    <Dial caller="+1 800-555-2368">
-      <Number>+1 415-483-0400</Number>
-    </Dial>
+  <Dial caller="+1 415-483-0400">
+    <Client>
+      <Identity>venkman</Identity>
+    </Client>
+    <Client method="GET">
+      <Identity>stantz</Identity>
+    </Client>
   </Dial>
 </Response>)
 ```
@@ -124,21 +123,19 @@ Multiple calls to `into_*` functions allow building complex nested TwiML
 structures without losing readability in the code due to nested function calls:
 
 ```elixir
-iex> TwiML.say("Calling Yodel")
-...> |> TwiML.identity("deadmau5")
-...> |> TwiML.parameter(name: "first_name", value: "Joel")
-...> |> TwiML.parameter(name: "last_name", value: "Zimmermann")
+iex> TwiML.identity("venkman")
+...> |> TwiML.parameter(name: "first_name", value: "Peter")
+...> |> TwiML.parameter(name: "last_name", value: "Venkman")
 ...> |> TwiML.into_client(3)
 ...> |> TwiML.into_dial(1)
 ...> |> TwiML.to_xml()
 ~s(<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say>Calling Yodel</Say>
   <Dial>
     <Client>
-      <Identity>deadmau5</Identity>
-      <Parameter name="first_name" value="Joel"/>
-      <Parameter name="last_name" value="Zimmermann"/>
+      <Identity>venkman</Identity>
+      <Parameter name="first_name" value="Peter"/>
+      <Parameter name="last_name" value="Venkman"/>
     </Client>
   </Dial>
 </Response>)

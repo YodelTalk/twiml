@@ -6,6 +6,16 @@ Generate complex TwiML responses for Twilio in an elegant Elixir way.
 
 ## Examples
 
+Say something:
+
+```elixir
+iex> TwiML.say(nil, "Hello") |> TwiML.to_xml()
+~s(<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say>Hello</Say>
+</Response>)
+```
+
 Say 2 things, one after the other:
 
 ```elixir
@@ -27,7 +37,7 @@ iex> TwiML.say(nil, "Hello", voice: "woman") |> TwiML.to_xml()
 </Response>)
 ```
 
-Leaving the content empty for a TwiML verb, will create a XML Element that has no body:
+Leaving the content empty for a TwiML verb, will create a TwiML element that has no body:
 
 ```elixir
 iex> TwiML.hangup([]) |> TwiML.to_xml()
@@ -37,7 +47,7 @@ iex> TwiML.hangup([]) |> TwiML.to_xml()
 </Response>)
 ```
 
-You can embed TwiML tags into other tags using the into_<verb> function:
+You can embed TwiML tags into other tags using the `into_*` function:
 
 ```elixir
 iex> TwiML.say("Lets say this inside the gather")
@@ -84,6 +94,8 @@ iex> TwiML.say("Calling Yodel")
 </Response>)
 ```
 
+Multiple calls to `into_*` functions allow building complex nested TwiML structures without losing readability in the code due to nested function calls.
+  
 ```elixir
 iex> TwiML.say("Calling Yodel")
 ...> |> TwiML.identity("deadmau5")

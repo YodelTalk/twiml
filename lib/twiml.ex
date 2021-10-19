@@ -13,6 +13,7 @@ defmodule TwiML do
       :gather,
       :hangup,
       :identity,
+      :leave,
       :number,
       :parameter,
       :pause,

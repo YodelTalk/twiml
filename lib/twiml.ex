@@ -9,6 +9,7 @@ defmodule TwiML do
     verbs: [
       :client,
       :dial,
+      :enqueue,
       :gather,
       :hangup,
       :identity,

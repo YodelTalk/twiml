@@ -18,6 +18,7 @@ defmodule TwiML do
       :parameter,
       :pause,
       :play,
+      :record,
       :redirect,
       :reject,
       :say

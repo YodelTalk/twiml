@@ -141,6 +141,16 @@ iex> TwiML.identity("venkman")
 </Response>)
 ```
 
+Attributes can be provided both as `snake_case` or `camelCase`, but the latter is preferred as the code looks more Elixir-like.
+
+```elixir
+iex> TwiML.dial("+1 415-483-0400", recordingStatusCallback: "https://example.org", recording_status_callback_method: "POST")
+...> |> TwiML.to_xml()
+~s(<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Dial recordingStatusCallback="https://example.org" recordingStatusCallbackMethod="POST">+1 415-483-0400</Dial>
+</Response>)
+```
 <!-- MDOC !-->
 
 ## Installation

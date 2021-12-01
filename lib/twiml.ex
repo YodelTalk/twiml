@@ -1,4 +1,6 @@
 defmodule TwiML do
+  import TwiML.Camelize, only: [camelize: 2]
+
   @external_resource "README.md"
   @moduledoc "README.md"
              |> File.read!()
@@ -31,6 +33,8 @@ defmodule TwiML do
 
   defp build_verb(verb, attrs, children) do
     verb = verb |> Atom.to_string() |> String.capitalize()
+    attrs = Enum.map(attrs, fn {k, v} -> {camelize(k, :lower), v} end)
+
     {verb, attrs, children}
   end
 end

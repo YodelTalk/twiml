@@ -165,6 +165,21 @@ iex> TwiML.say({:iodata, [104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]}
 iex> TwiML.say({:cdata, "<Hello>\\<World>"}) |> TwiML.to_xml()
 ~s(<?xml version="1.0" encoding="UTF-8"?>\n<Response>\n  <Say><![CDATA[<Hello>\\<World>]]></Say>\n</Response>)
 ```
+
+This also works with verb parameters:
+
+```elixir
+
+iex> TwiML.say({:safe, "<tag>Hello World</tag>"}, voice: "Polly.Joanna") |> TwiML.to_xml()
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say voice=\"Polly.Joanna\"><tag>Hello World</tag></Say>\n</Response>"
+
+iex> TwiML.say({:iodata, [104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]}, voice: "Polly.Joanna") |> TwiML.to_xml()
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say voice=\"Polly.Joanna\">hello world</Say>\n</Response>"
+
+iex> TwiML.say({:cdata, "<Hello>\\<World>"}, voice: "Polly.Joanna") |> TwiML.to_xml()
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say voice=\"Polly.Joanna\"><![CDATA[<Hello>\\<World>]]></Say>\n</Response>"
+
+```
 <!-- MDOC !-->
 
 ## Installation

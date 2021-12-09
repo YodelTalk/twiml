@@ -26,7 +26,7 @@ defmodule TwiML.Magic do
         [build_verb(unquote(verb), [], content)]
       end
 
-      def unquote(verb)({:iodata, text} = content) when is_binary(text) do
+      def unquote(verb)({:iodata, text} = content) when is_list(text) do
         [build_verb(unquote(verb), [], content)]
       end
 

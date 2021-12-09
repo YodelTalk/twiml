@@ -159,7 +159,7 @@ Make sure to only mark actually safe data as safe!
 iex> TwiML.say({:safe, "<tag>Hello World</tag>"}) |> TwiML.to_xml()
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say><tag>Hello World</tag></Say>\n</Response>"
 
-iex> TwiML.say({:iodata, <<104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100>>}) |> TwiML.to_xml()
+iex> TwiML.say({:iodata, [104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]}) |> TwiML.to_xml()
 ~s(<?xml version="1.0" encoding="UTF-8"?>\n<Response>\n  <Say>hello world</Say>\n</Response>)
 
 iex> TwiML.say({:cdata, "<Hello>\\<World>"}) |> TwiML.to_xml()

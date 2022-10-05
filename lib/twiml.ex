@@ -40,4 +40,12 @@ defmodule TwiML do
 
     {verb, attrs, children}
   end
+
+  def comment(text) do
+    [{"!--", [], text}]
+  end
+
+  def comment(verbs, text) do
+    verbs ++ [comment(text)]
+  end
 end

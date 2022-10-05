@@ -178,6 +178,33 @@ iex> TwiML.say({:iodata, [104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]}
 iex> TwiML.say({:cdata, "<Hello>\\<World>"}, voice: "Polly.Joanna") |> TwiML.to_xml()
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say voice=\"Polly.Joanna\"><![CDATA[<Hello>\\<World>]]></Say>\n</Response>"
 ```
+
+Comments can help with debugging (yes, they are somewhat ugly, until `xml_builder` supports proper comments):
+
+```elixir
+iex> TwiML.comment("Blocked because of insufficient funds") |> TwiML.reject() |> TwiML.to_xml()
+~s(<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <!-->Blocked because of insufficient funds</!-->
+  <Reject/>
+</Response>)
+```
+
+And can also be chained:
+
+```elixir
+iex> TwiML.say("Sorry, calls are currently unavailable")
+...> |> TwiML.comment("Blocked because of insufficient funds")
+...> |> TwiML.reject()
+...> |> TwiML.to_xml()
+~s(<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say>Sorry, calls are currently unavailable</Say>
+  <!-->Blocked because of insufficient funds</!-->
+  <Reject/>
+</Response>)
+```
+
 <!-- MDOC !-->
 
 ## Installation

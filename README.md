@@ -179,7 +179,7 @@ iex> TwiML.say({:cdata, "<Hello>\\<World>"}, voice: "Polly.Joanna") |> TwiML.to_
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say voice=\"Polly.Joanna\"><![CDATA[<Hello>\\<World>]]></Say>\n</Response>"
 ```
 
-Comments can help with debugging (yes, they are somewhat ugly, until `xml_builder` supports proper comments):
+Comments can help with debugging (yes, they are somewhat ugly, until `xml_builder` properly supports them):
 
 ```elixir
 iex> TwiML.comment("Blocked because of insufficient funds") |> TwiML.reject() |> TwiML.to_xml()

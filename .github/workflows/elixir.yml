@@ -1,4 +1,4 @@
-name: CI
+name: Test
 
 on:
   pull_request:
@@ -14,14 +14,39 @@ jobs:
       MIX_ENV: test
     strategy:
       fail-fast: true
+      # https://hexdocs.pm/elixir/1.14.0/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp
       matrix:
-        elixir: [1.11, 1.12]
-        otp: [21.x, 22.x, 23.x, 24.x]
-        exclude:
-          - elixir: 1.12
+        include:
+          - elixir: 1.11
             otp: 21.x
           - elixir: 1.11
+            otp: 22.x
+          - elixir: 1.11
+            otp: 23.x
+
+          - elixir: 1.12
+            otp: 22.x
+          - elixir: 1.12
+            otp: 23.x
+          - elixir: 1.12
             otp: 24.x
+
+          - elixir: 1.13
+            otp: 22.x
+          - elixir: 1.13
+            otp: 23.x
+          - elixir: 1.13
+            otp: 24.x
+          - elixir: 1.13
+            otp: 25.x
+
+          - elixir: 1.14
+            otp: 23.x
+          - elixir: 1.14
+            otp: 24.x
+          - elixir: 1.14
+            otp: 25.x
+
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1

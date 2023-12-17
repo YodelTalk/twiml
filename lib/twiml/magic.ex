@@ -12,9 +12,38 @@ defmodule TwiML.Magic do
 
   def twiml_verb(verb) do
     quote do
+      twiml = TwiML.Camelize.camelize(Atom.to_string(unquote(verb)))
+
+      link =
+        "https://www.twilio.com/docs/voice/twiml/" <>
+          String.replace(Atom.to_string(unquote(verb)), "_", "")
+
+      @doc """
+      Generates an empty `<#{twiml}>` verb.
+      """
+      @spec unquote(verb)() :: TwiML.t()
       def unquote(verb)() do
         [build_verb(unquote(verb), [], [])]
       end
+
+      @doc """
+      Generates a `<#{twiml}>` verb.
+
+      There are three supported usages:
+
+      - Wraps `args` in `<#{twiml}>` if it's `t:TwiML.content/0`.
+      - Creates an empty `<#{twiml}>` with attributes for `args` as a keyword
+        list.
+      - Appends an empty `<#{twiml}>` to `args` if it's `t:TwiML.t/0`, enabling
+        verb chaining (refer to [Examples](#module-examples)).
+
+      > #### Note {: .warning}
+      >
+      > Please refer to the [official documentation](#{link}) to verify that the
+      > `#{twiml}` TwiML verb actually supports content or the given attributes.
+      """
+      @spec unquote(verb)(TwiML.content() | keyword() | TwiML.t()) :: TwiML.t()
+      def unquote(verb)(args)
 
       def unquote(verb)(content) when is_binary(content) do
         [build_verb(unquote(verb), [], content)]
@@ -40,10 +69,35 @@ defmodule TwiML.Magic do
         end
       end
 
+      @doc """
+      Appends or generates a `<#{twiml}>` verb.
+
+      There are multiple supported usages:
+
+      - Appends `<#{twiml}>` to `verbs_or_content` if it's `t:TwiML.t/0`,
+        enabling verb chaining (see [Examples](#module-examples)). This verb
+        wraps `content_or_attrs` if it's `t:TwiML.content/0`, or includes
+        attributes if `content_or_attrs` is a keyword list.
+      - Generates `<#{twiml}>` with attributes if `content_or_attrs` is a
+        keyword list.
+
+      > #### Note {: .warning}
+      >
+      > Please refer to the [official documentation](#{link}) to verify that the
+      > `#{twiml}` TwiML verb actually supports content or the given attributes.
+      """
+      def unquote(verb)(verbs_or_content, content_or_attrs)
+
+      @spec unquote(verb)(TwiML.t(), keyword() | TwiML.content()) :: TwiML.t()
       def unquote(verb)(verbs, attrs) when is_list(verbs) and is_list(attrs) do
         verbs ++ [build_verb(unquote(verb), attrs, [])]
       end
 
+      def unquote(verb)(verbs, content) when is_binary(content) do
+        verbs ++ [build_verb(unquote(verb), [], content)]
+      end
+
+      @spec unquote(verb)(TwiML.content(), keyword()) :: TwiML.t()
       def unquote(verb)(content, attrs) when is_binary(content) do
         [build_verb(unquote(verb), attrs, content)]
       end
@@ -60,10 +114,18 @@ defmodule TwiML.Magic do
         [build_verb(unquote(verb), attrs, content)]
       end
 
-      def unquote(verb)(verbs, content) when is_binary(content) do
-        verbs ++ [build_verb(unquote(verb), [], content)]
-      end
+      @doc """
+      Appends a `<#{twiml}>` verb with attributes.
 
+      Adds a `<#{twiml}>` verb to `verbs` using `attrs` as attributes,
+      facilitating verb chaining (see [Examples](#module-examples)).
+
+      > #### Note {: .warning}
+      >
+      > Please refer to the [official documentation](#{link}) to verify that the
+      > `#{twiml}` TwiML verb actually supports content or the given attributes.
+      """
+      @spec unquote(verb)(TwiML.t(), TwiML.content(), keyword()) :: TwiML.t()
       def unquote(verb)(verbs, content, attrs)
           when is_list(verbs) and is_binary(content) and is_list(attrs) do
         verbs ++ [build_verb(unquote(verb), attrs, content)]

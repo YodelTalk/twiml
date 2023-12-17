@@ -22,7 +22,14 @@ defmodule Twiml.MixProject do
       # Docs
       name: "TwiML",
       source_url: @url,
-      docs: [main: "TwiML", source_ref: "v#{@version}"]
+      docs: [
+        main: "TwiML",
+        source_ref: "v#{@version}",
+        groups_for_docs: [
+          {:Types, &(&1[:kind] == :type)},
+          {:"TwiML Verbs", &(!&1[:helper])}
+        ]
+      ]
     ]
   end
 
@@ -30,7 +37,7 @@ defmodule Twiml.MixProject do
   defp deps do
     [
       {:xml_builder, "~> 2.2"},
-      {:ex_doc, "~> 0.24", only: :docs}
+      {:ex_doc, "~> 0.31", only: :docs}
     ]
   end
 

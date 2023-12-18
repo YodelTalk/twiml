@@ -72,7 +72,7 @@ defmodule TwiML.Magic do
       @doc """
       Appends or generates a `<#{twiml}>` verb.
 
-      There are multiple supported usages:
+      There are two supported usages:
 
       - Appends `<#{twiml}>` to `verbs_or_content` if it's `t:TwiML.t/0`,
         enabling verb chaining (see [Examples](#module-examples)). This verb
@@ -131,18 +131,57 @@ defmodule TwiML.Magic do
         verbs ++ [build_verb(unquote(verb), attrs, content)]
       end
 
-      # How many of the preceding XML elements should be put into this one as
-      # children? By default :all will be put in.
-      def unquote(String.to_atom("into_#{verb}"))(verbs, last_n_elements \\ :all)
+      @doc """
+      Wraps preceding TwiML verbs in a `<#{twiml}>` verb.
 
-      def unquote(String.to_atom("into_#{verb}"))(verbs, last_n_elements)
-          when is_integer(last_n_elements) or is_atom(last_n_elements) do
-        unquote(String.to_atom("into_#{verb}"))(verbs, last_n_elements, [])
+      There are three supported usages:
+      - Uses `attrs_or_last_n_elements` as attributes to wrap all preceding verbs
+        in `<#{twiml}>` if it's a keyword list.
+      - Wraps all preceding verbs in `<#{twiml}>` if `attrs_or_last_n_elements` is
+        `:all`.
+      - Encloses the last `attrs_or_last_n_elements` verbs in `<#{twiml}>` if it's a
+        positive integer.
+
+      > #### Note {: .warning}
+      >
+      > Please refer to the [official documentation](#{link}) to verify that the
+      > `#{twiml}` TwiML verb actually supports the given attributes.
+      """
+      @spec unquote(String.to_atom("into_#{verb}"))(
+              TwiML.t(),
+              keyword() | :all | pos_integer()
+            ) :: TwiML.t()
+      def unquote(String.to_atom("into_#{verb}"))(verbs, attrs_or_last_n_elements \\ :all)
+
+      def unquote(String.to_atom("into_#{verb}"))(verbs, attrs_or_last_n_elements)
+          when is_integer(attrs_or_last_n_elements) or is_atom(attrs_or_last_n_elements) do
+        unquote(String.to_atom("into_#{verb}"))(verbs, attrs_or_last_n_elements, [])
       end
 
       def unquote(String.to_atom("into_#{verb}"))(verbs, attrs) when is_list(attrs) do
         unquote(String.to_atom("into_#{verb}"))(verbs, :all, attrs)
       end
+
+      @doc """
+      Wraps preceding TwiML verbs in a `<#{twiml}>` verb with attributes.
+
+      There are three supported usages:
+      - Wraps all preceding verbs in `<#{twiml}>` using `attrs` as attributes if
+        `last_n_elements` is `:all`.
+      - Encloses the last `last_n_elements` verbs in `<#{twiml}>` using `attrs`
+        as attribute if it's a positive integer.
+
+      > #### Note {: .warning}
+      >
+      > Please refer to the [official documentation](#{link}) to verify that the
+      > `#{twiml}` TwiML verb actually supports the given attributes.
+      """
+      @spec unquote(String.to_atom("into_#{verb}"))(
+              TwiML.t(),
+              :all | pos_integer(),
+              keyword()
+            ) :: TwiML.t()
+      def unquote(String.to_atom("into_#{verb}"))(verbs, last_n_elements, attrs)
 
       def unquote(String.to_atom("into_#{verb}"))(verbs, :all, attrs) do
         [build_verb(unquote(verb), attrs, [verbs])]

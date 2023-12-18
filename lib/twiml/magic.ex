@@ -31,10 +31,10 @@ defmodule TwiML.Magic do
 
       There are three supported usages:
 
-      - Wraps `args` in `<#{twiml}>` if it's `t:TwiML.content/0`.
-      - Creates an empty `<#{twiml}>` with attributes for `args` as a keyword
+      - Wraps `arg` in `<#{twiml}>` if it's `t:TwiML.content/0`.
+      - Creates an empty `<#{twiml}>` with attributes for `arg` as a keyword
         list.
-      - Appends an empty `<#{twiml}>` to `args` if it's `t:TwiML.t/0`, enabling
+      - Appends an empty `<#{twiml}>` to `arg` if it's `t:TwiML.t/0`, enabling
         verb chaining (refer to [Examples](#module-examples)).
 
       > #### Note {: .warning}
@@ -43,7 +43,7 @@ defmodule TwiML.Magic do
       > `#{twiml}` TwiML verb actually supports content or the given attributes.
       """
       @spec unquote(verb)(TwiML.content() | keyword() | TwiML.t()) :: TwiML.t()
-      def unquote(verb)(args)
+      def unquote(verb)(arg)
 
       def unquote(verb)(content) when is_binary(content) do
         [build_verb(unquote(verb), [], content)]

@@ -3,10 +3,13 @@ defmodule TwiML do
 
   @external_resource "README.md"
   @moduledoc """
-  Generate complex TwiML responses for Twilio in an elegant Elixir way.
+  Generate complex TwiML documents for Twilio in an elegant Elixir way.
 
-  For more details on supported TwiML verbs and their arguments, please consult
-  the official [Twilio documentation](https://www.twilio.com/docs/voice/twiml).
+  > #### Note {: .warning}
+  >
+  > Please refer to the [official TwiML
+  > documentation](https://www.twilio.com/docs/voice/twiml) to verify that the
+  > TwiML verb actually supports content or the given attributes.
 
   #{"README.md" |> File.read!() |> String.split("<!-- MDOC !-->") |> Enum.fetch!(1)}
   """

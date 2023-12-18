@@ -3,7 +3,7 @@
 [![Test](https://github.com/YodelTalk/twiml/actions/workflows/test.yml/badge.svg)](https://github.com/YodelTalk/twiml/actions/workflows/test.yml)
 [![CI](https://github.com/YodelTalk/twiml/actions/workflows/ci.yml/badge.svg)](https://github.com/YodelTalk/twiml/actions/workflows/ci.yml)
 
-TwiML is a Elixir library to generate complex TwiML responses for Twilio in an
+TwiML is a Elixir library to generate complex TwiML documents for Twilio in an
 elegant way.
 
 <!-- MDOC !-->

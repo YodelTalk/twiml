@@ -14,10 +14,6 @@ defmodule TwiML.Magic do
     quote do
       twiml = TwiML.Camelize.camelize(Atom.to_string(unquote(verb)))
 
-      link =
-        "https://www.twilio.com/docs/voice/twiml/" <>
-          String.replace(Atom.to_string(unquote(verb)), "_", "")
-
       @doc """
       Generates an empty `<#{twiml}>` verb.
       """
@@ -36,11 +32,6 @@ defmodule TwiML.Magic do
         list.
       - Appends an empty `<#{twiml}>` to `arg` if it's `t:TwiML.t/0`, enabling
         verb chaining (refer to [Examples](#module-examples)).
-
-      > #### Note {: .warning}
-      >
-      > Please refer to the [official documentation](#{link}) to verify that the
-      > `#{twiml}` TwiML verb actually supports content or the given attributes.
       """
       @spec unquote(verb)(TwiML.content() | keyword() | TwiML.t()) :: TwiML.t()
       def unquote(verb)(arg)
@@ -80,11 +71,6 @@ defmodule TwiML.Magic do
         attributes if `content_or_attrs` is a keyword list.
       - Generates `<#{twiml}>` with attributes if `content_or_attrs` is a
         keyword list.
-
-      > #### Note {: .warning}
-      >
-      > Please refer to the [official documentation](#{link}) to verify that the
-      > `#{twiml}` TwiML verb actually supports content or the given attributes.
       """
       def unquote(verb)(verbs_or_content, content_or_attrs)
 
@@ -119,11 +105,6 @@ defmodule TwiML.Magic do
 
       Adds a `<#{twiml}>` verb to `verbs` using `attrs` as attributes,
       facilitating verb chaining (see [Examples](#module-examples)).
-
-      > #### Note {: .warning}
-      >
-      > Please refer to the [official documentation](#{link}) to verify that the
-      > `#{twiml}` TwiML verb actually supports content or the given attributes.
       """
       @spec unquote(verb)(TwiML.t(), TwiML.content(), keyword()) :: TwiML.t()
       def unquote(verb)(verbs, content, attrs)
@@ -141,11 +122,6 @@ defmodule TwiML.Magic do
         `:all`.
       - Encloses the last `attrs_or_last_n_elements` verbs in `<#{twiml}>` if it's a
         positive integer.
-
-      > #### Note {: .warning}
-      >
-      > Please refer to the [official documentation](#{link}) to verify that the
-      > `#{twiml}` TwiML verb actually supports the given attributes.
       """
       @spec unquote(String.to_atom("into_#{verb}"))(
               TwiML.t(),
@@ -170,11 +146,6 @@ defmodule TwiML.Magic do
         `last_n_elements` is `:all`.
       - Encloses the last `last_n_elements` verbs in `<#{twiml}>` using `attrs`
         as attribute if it's a positive integer.
-
-      > #### Note {: .warning}
-      >
-      > Please refer to the [official documentation](#{link}) to verify that the
-      > `#{twiml}` TwiML verb actually supports the given attributes.
       """
       @spec unquote(String.to_atom("into_#{verb}"))(
               TwiML.t(),

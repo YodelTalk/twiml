@@ -33,7 +33,16 @@ defmodule TwiML do
       :stream
     ]
 
+  @typedoc """
+  A TwiML document contains one or more TwiML verbs. These verbs can have
+  attributes and can wrap nested TwiML verbs.
+  """
   @type t :: [{atom(), keyword(), content() | t()}]
+
+  @typedoc """
+  Content which can be used within a TwiML verb. Refer to the `XmlBuilder`
+  documentation for more information.
+  """
   @type content :: binary() | {:safe, binary()} | {:cdata, binary()} | {:iodata, binary()}
 
   @doc """

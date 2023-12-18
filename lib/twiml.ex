@@ -16,13 +16,23 @@ defmodule TwiML do
     # verbs with the official TwiML at https://www.twilio.com/docs/voice/twiml
     verbs: [
       [:connect, :autopilot, :siprec, :stream, :virtual_agent],
-      [:dial, :client, [:identity, :parameter], :conference, :number, :queue, :sim, :sip],
+      [
+        :dial,
+        :application,
+        :client,
+        [:identity, :parameter],
+        :conference,
+        :number,
+        :queue,
+        :sim,
+        :sip
+      ],
       :enqueue,
       :gather,
       :hangup,
       :leave,
       :pause,
-      [:pay, :prompt],
+      [:pay, :prompt, :parameter],
       :play,
       :record,
       :redirect,

@@ -37,6 +37,7 @@ defmodule Twiml.MixProject do
   defp deps do
     [
       {:xml_builder, "~> 2.2"},
+      {:doctest_formatter, "~> 0.2.0", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.31", only: :docs},
       {:styler, ">= 0.11.1", only: [:dev, :test], runtime: false}
     ]

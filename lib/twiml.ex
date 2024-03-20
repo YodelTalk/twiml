@@ -113,7 +113,9 @@ defmodule TwiML do
 
   ## Examples
 
-      iex> TwiML.reject() |> TwiML.comment("Blocked because of insufficient funds") |> TwiML.to_xml(format: :none)
+      iex> TwiML.reject()
+      ...> |> TwiML.comment("Blocked because of insufficient funds")
+      ...> |> TwiML.to_xml(format: :none)
       ~s(<?xml version="1.0" encoding="UTF-8"?><Response><Reject/><!-->Blocked because of insufficient funds</!--></Response>)
 
   """
